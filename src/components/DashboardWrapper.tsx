@@ -1,9 +1,10 @@
 import { cn } from "@/lib/utils"
 import { Navbar } from "./Navbar"
 import { Sidebar } from "./Sidebar"
+import StoreProvider from "@/redux/store/StoreProvider"
 
 
-export const DashboardWrapper = ({
+export const DashboardLayout = ({
     children
 }: {
     children: React.ReactNode
@@ -18,5 +19,15 @@ export const DashboardWrapper = ({
                 {children}
             </main>
         </div>
+    )
+}
+
+export const DashboardWrapper = ({ children }: { children: React.ReactNode }) => {
+    return (
+        <StoreProvider>
+            <DashboardLayout>
+                {children}
+            </DashboardLayout>
+        </StoreProvider>
     )
 }
