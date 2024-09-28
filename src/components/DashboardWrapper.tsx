@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import { Navbar } from "./Navbar"
 
 export const DashboardWrapper = ({
     children
@@ -11,7 +12,7 @@ export const DashboardWrapper = ({
                 {/* Sidebar */}
             </aside>
             <main className={cn("flex w-full flex-col bg-neutral-100 dark:bg-neutral-900 md:pl-64")}>
-                {/* Navbar */}
+                <Navbar />
                 {children}
             </main>
         </div>
