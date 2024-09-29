@@ -8,16 +8,24 @@ import { usePathname } from "next/navigation";
 import { setIsSidebarCollapsed } from "@/redux/state";
 import { useAppDispatch, useAppSelector } from "@/redux/store/StoreProvider";
 
-import { 
+import {
     X,
     User,
-    Lock, 
+    Lock,
     Home,
     Users,
     Search,
     Settings,
     Briefcase,
-    LucideIcon,        
+    ChevronUp,
+    LucideIcon,
+    ChevronDown,
+    Tally1,
+    Tally5,
+    Tally4,
+    Tally3,
+    Tally2,
+    
 } from "lucide-react";
 
 
@@ -99,6 +107,61 @@ export const Sidebar = () => {
                         href="/settings"
                     />
                 </ul>
+
+                {/* Projects */}
+                <button
+                    onClick={() => setShowProjects(!showProjects)}
+                    className="flex w-full items-center justify-between px-8 py-3 text-muted-foreground transition-transform duration-300 ease-in-out"
+                >
+                    <span>Projects</span>
+                    {showProjects ? (
+                        <ChevronUp className="size-5" />
+                    ) : (
+                        <ChevronDown className="size-5" />
+                    )}
+                </button>
+
+                {/* Priorities */}
+                <button
+                    onClick={() => setShowPriorities(!showPriorities)}
+                    className="flex w-full items-center justify-between px-8 py-3 text-muted-foreground transition-transform duration-300 ease-in-out"
+                >
+                    <span>Priority</span>
+                    {showProjects ? (
+                        <ChevronUp className="size-5" />
+                    ) : (
+                        <ChevronDown className="size-5" />
+                    )}
+                </button>
+                {showPriorities && (
+                    <>
+                        <SidebarLinks
+                            icon={Tally1}
+                            label="Urgent"
+                            href="/priority/urgent"
+                        />
+                        <SidebarLinks
+                            icon={Tally2}
+                            label="High"
+                            href="/priority/high"
+                        />
+                        <SidebarLinks
+                            icon={Tally3}
+                            label="Medium"
+                            href="/priority/medium"
+                        />
+                        <SidebarLinks
+                            icon={Tally4}
+                            label="Low"
+                            href="/priority/low"
+                        />
+                        <SidebarLinks
+                            icon={Tally5}
+                            label="Backlog"
+                            href="/priority/backlog"
+                        />
+                    </>
+                )}
             </nav>
         </aside>
     );
