@@ -28,4 +28,13 @@ model User {
   team           Team?            @relation(fields: [teamId], references: [id])
 }
 
+model Team {
+  id                   Int    @id @default(autoincrement())
+  teamName             String
+  productOwnerUserId   Int?
+  projectManagerUserId Int?
+
+  projectTeams ProjectTeam[]
+  user         User[]
+}
 
