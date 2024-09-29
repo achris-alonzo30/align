@@ -38,3 +38,14 @@ model Team {
   user         User[]
 }
 
+model Project {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  startDate   DateTime?
+  endDate     DateTime?
+
+  tasks Task[]
+  projectTeams ProjectTeam[]
+}
+
