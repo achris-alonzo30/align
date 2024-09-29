@@ -39,13 +39,21 @@ model Team {
 }
 
 model Project {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   name        String
   description String?
   startDate   DateTime?
   endDate     DateTime?
 
-  tasks Task[]
+  tasks        Task[]
   projectTeams ProjectTeam[]
 }
 
+model ProjectTeam {
+  id        Int @id @default(autoincrement())
+  teamId    Int
+  projectId Int
+
+  team    Team?        @relation(fields: [teamId], references: [id])
+  project ProjectTeam? @relation(fields: [projectId], references: [id])
+}
