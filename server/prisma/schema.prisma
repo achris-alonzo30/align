@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
@@ -20,8 +21,8 @@ model User {
   profilePictureUrl String?
   teamId            Int?
 
-  authoredTask    Task[]           @relation("TaskAuthor")
-  assignedTask    Task[]           @relation("TaskAssignee")
+  authoredTasks   Task[]           @relation("TaskAuthor")
+  assignedTasks   Task[]           @relation("TaskAssignee")
   taskAssignments TaskAssignment[]
   attachments     Attachment[]
   comments        Comment[]
@@ -29,33 +30,30 @@ model User {
 }
 
 model Team {
-  id                   Int    @id @default(autoincrement())
+  id                   Int           @id @default(autoincrement())
   teamName             String
   productOwnerUserId   Int?
   projectManagerUserId Int?
-
-  projectTeams ProjectTeam[]
-  user         User[]
+  projectTeams         ProjectTeam[]
+  user                 User[]
 }
 
 model Project {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String?
-  startDate   DateTime?
-  endDate     DateTime?
-
+  id           Int           @id @default(autoincrement())
+  name         String
+  description  String?
+  startDate    DateTime?
+  endDate      DateTime?
   tasks        Task[]
   projectTeams ProjectTeam[]
 }
 
 model ProjectTeam {
-  id        Int @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   teamId    Int
   projectId Int
-
-  team    Team    @relation(fields: [teamId], references: [id])
-  project Project @relation(fields: [projectId], references: [id])
+  team      Team    @relation(fields: [teamId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
 }
 
 model Task {
@@ -106,6 +104,6 @@ model Comment {
   taskId Int
   userId Int
 
-  task       Task @relation(fields: [taskId], references: [id])
-  uploadedBy User @relation(fields: [userId], references: [userId])
+  task Task @relation(fields: [taskId], references: [id])
+  user User @relation(fields: [userId], references: [userId])
 }
