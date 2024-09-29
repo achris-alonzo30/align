@@ -79,3 +79,12 @@ model Task {
   attachments Attachment[]
   comments Comment[]
 }
+
+model TaskAssignment {
+  id             Int       @id @default(autoincrement())
+  userId Int
+  taskId Int
+
+  user User @relation(fields: [userId], references: [userId])
+  task Task @relation(fields: [taskId], references: [id])
+}
