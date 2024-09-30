@@ -79,3 +79,35 @@ export const createTask = async (
         })
     }
 }
+
+export const updateTaskStatus = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const { taskId } = req.params;
+    const { status } = req.body;
+
+    try {
+        const updatedTask = await prisma.task.update({
+            where: {
+                id: Number(taskId)
+            },
+            data: {
+                status
+            }
+        });
+
+        if (!updatedTask) {
+            res.sendStatus(404).json({
+                message: "Task not found"
+            })
+        }
+
+        res.json(updatedTask);
+    } catch (err) {
+        console.error("Failed to update task", err);
+        res.sendStatus(500).json({
+            message: "Failed to update task"
+        })
+    }
+}

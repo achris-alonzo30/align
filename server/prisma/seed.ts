@@ -24,14 +24,14 @@ async function main() {
   const dataDirectory = path.join(__dirname, "seedData");
 
   const orderedFileNames = [
-    "taskAssignment.json",
-    "comment.json",
-    "attachment.json",
-    "task.json",
-    "projectTeam.json",
-    "project.json",
-    "user.json",
-    "team.json",
+    "team.json",        // Team should come first as it's referenced by User and ProjectTeam
+    "user.json",        // User references Team
+    "project.json",     // Project is independent of other models
+    "projectTeam.json", // ProjectTeam references Team and Project
+    "task.json",        // Task references Project, and authorUserId references User
+    "taskAssignment.json", // TaskAssignment references User and Task
+    "attachment.json",  // Attachment references Task and User
+    "comment.json",     // Comment references Task and User
   ];
   
 
