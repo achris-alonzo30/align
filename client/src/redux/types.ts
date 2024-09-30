@@ -6,6 +6,15 @@ export interface Project {
     endDate?: string
 }
 
+export interface User {
+    userId?: number;
+    username: string;
+    email: string;
+    profilePirctureUrl?: string;
+    cognitoId?: string;
+    teamId?: number;
+}
+
 export interface Task {
     id: number;
     tags?: string;
