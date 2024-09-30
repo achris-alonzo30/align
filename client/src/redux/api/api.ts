@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Project, Task } from "../types";
+import { updateTaskStatus } from '../../../../server/src/controllers/task.controller';
+import { error } from "console";
 
 export const api = createApi({
     baseQuery: fetchBaseQuery({
@@ -32,6 +34,14 @@ export const api = createApi({
             }),
             invalidatesTags: ["Tasks"],
         }),
+        updateTaskStatus: builder.mutation<Task, { taskId: number, status: string }>({
+            query: ({ taskId, status }) => ({
+                url: `/tasks/${taskId}/status`,
+                method: "PATCH",
+                body: { status }
+            }),
+            invalidatesTags: (result, error, { taskId }) => [{ type: "Tasks", id: taskId }],
+        })
     })
 });
 
