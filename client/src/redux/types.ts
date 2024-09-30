@@ -19,13 +19,22 @@ export interface Task {
     description?: string;
     authorUserId?: number;
     assignedUserId?: number;
+
+    author?: User;
+    assignee?: User;
+    comments?: Comment[],
+    attachments?: Attachment[]
 }
 
-export interface Status {
-
+export enum Status {
+    todo = "To Do",
+    inProgress = "In Progress",
+    underReview = "Under Review",
+    done = "Done"
 }
 
 export enum Priority {
+    backlog = "Backlog",
     Low = "Low",
     Medium = "Medium",
     High = "High",
