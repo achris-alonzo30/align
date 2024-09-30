@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ProjectHeader } from "./ProjectHeader";
 
 export const ProjectIdPage = ({ params } : { params: { projectId: string }}) => {
     const { projectId } = params;
