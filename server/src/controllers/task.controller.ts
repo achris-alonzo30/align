@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const getTasks = async(
+export const getTasks = async (
     req: Request,
     res: Response
 ): Promise<void> => {
@@ -33,6 +33,49 @@ export const getTasks = async(
         console.error("Failed to get taskss", err);
         res.sendStatus(500).json({
             message: "Failed to get tasks"
+        })
+    }
+}
+
+export const createTask = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const {
+        tags,
+        title,
+        status,
+        points,
+        dueDate,
+        priority,
+        projectId,
+        startDate,
+        description,
+        authorUserId,
+        assignedUserId
+    } = req.body;
+    try {
+        const newTask = await prisma.task.create({
+            data: {
+                tags,
+                title,
+                status,
+                points,
+                dueDate,
+                priority,
+                projectId,
+                startDate,
+                description,
+                authorUserId,
+                assignedUserId
+            }
+        })
+
+        res.status(201).json(newTask);
+    } catch (err) {
+        console.error("Failed to create task", err);
+        res.sendStatus(500).json({
+            message: "Failed to create task"
         })
     }
 }
