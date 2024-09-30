@@ -1,12 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
-import { Project } from "../types";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Project, Task } from "../types";
 
 export const api = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL
     }),
     reducerPath: "api",
-    tagTypes: ["Projects"],
+    tagTypes: ["Projects", "Tasks"],
     endpoints: (builder) => ({
         getProjects: builder.query<Project[], void>({
             query: () => "/projects",
@@ -19,8 +19,15 @@ export const api = createApi({
                 body: project
             }),
             invalidatesTags: ["Projects"],
-        })
+        }),
+        getTasks: builder.query<Task[], { projectId: number }>({
+            query: (projectId) => `/tasks?projectId=${projectId}`,
+            providesTags: (result) => result ? result.map(({ id }) => ({ type: "Tasks" as const, id })) : [{ type: "Tasks" as const }],
+        }),
     })
 });
 
-export const {} = api;
+export const {
+    useGetProjectsQuery,
+    useCreateProjectMutation
+} = api;
