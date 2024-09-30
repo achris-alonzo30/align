@@ -15,6 +15,14 @@ export interface User {
     teamId?: number;
 }
 
+export interface Attachment {
+    id: number;
+    fileURL: string;
+    fileName: string;
+    taskId: number;
+    uploadedById: number;
+}
+
 export interface Task {
     id: number;
     tags?: string;
