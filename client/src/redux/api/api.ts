@@ -47,5 +47,8 @@ export const api = createApi({
 
 export const {
     useGetProjectsQuery,
-    useCreateProjectMutation
+    useCreateProjectMutation,
+    useGetTasksQuery,
+    useCreateTaskMutation,
+    useUpdateTaskStatusMutation
 } = api;

@@ -27,6 +27,7 @@ import {
     Tally2,
     
 } from "lucide-react";
+import { useGetProjectsQuery } from "@/redux/api/api";
 
 
 
@@ -34,8 +35,11 @@ export const Sidebar = () => {
     const [showProjects, setShowProjects] = useState(true);
     const [showPriorities, setShowPriorities] = useState(true);
 
+    const { data: projects, isLoading } = useGetProjectsQuery();
     const dispatch = useAppDispatch();
     const isSidebarCollapsed = useAppSelector(state => state.global.isSidebarCollapsed);
+
+    if (isLoading) return <>Loading...</>;
 
     return (
         <aside className={cn("fixed flex flex-col h-[100%] justify-between shadow-xl transition-all duration-300 ease-in-out z-40 dark:bg-neutral-900 overflow-y-auto bg-neutral-100",
@@ -120,6 +124,14 @@ export const Sidebar = () => {
                         <ChevronDown className="size-5" />
                     )}
                 </button>
+                {showProjects && projects?.map(project => (
+                    <SidebarLinks 
+                        key={project.id}
+                        icon={Briefcase}
+                        label={project.name}
+                        href={`/projects/${project.id}`}
+                    />
+                ))}
 
                 {/* Priorities */}
                 <button
