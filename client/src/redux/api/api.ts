@@ -11,6 +11,14 @@ export const api = createApi({
         getProjects: builder.query<Project[], void>({
             query: () => "/projects",
             providesTags: ["Projects"],
+        }),
+        createProject: builder.mutation<Project, Partial<Project>>({
+            query: (project) => ({
+                url: "/projects",
+                method: "POST",
+                body: project
+            }),
+            invalidatesTags: ["Projects"],
         })
     })
 });
