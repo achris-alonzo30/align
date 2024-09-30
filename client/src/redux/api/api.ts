@@ -24,6 +24,14 @@ export const api = createApi({
             query: (projectId) => `/tasks?projectId=${projectId}`,
             providesTags: (result) => result ? result.map(({ id }) => ({ type: "Tasks" as const, id })) : [{ type: "Tasks" as const }],
         }),
+        createTask: builder.mutation<Task, Partial<Task>>({
+            query: (task) => ({
+                url: "/tasks",
+                method: "POST",
+                body: task
+            }),
+            invalidatesTags: ["Tasks"],
+        }),
     })
 });
 
